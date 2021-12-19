@@ -1,6 +1,9 @@
 <?php
 
+use GuzzleHttp\Middleware;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Builder\Function_;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/panel', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+
+Route::group(['middleware'=> ['auth',"isAdmin"]],function () {
+    
+    Route::get("deneme", function(){
+        echo "middeware testi";
+    });
+});
+
+
+
