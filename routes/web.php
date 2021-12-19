@@ -4,6 +4,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Route;
 use PhpParser\Builder\Function_;
+use App\Http\Controllers\Admin\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/panel', function () {
 
 Route::group(['middleware'=> ['auth',"isAdmin"]],function () {
     
-    Route::get("deneme", function(){
-        echo "middeware testi";
-    });
+    Route::resource('quizzes', QuizController::class);
 });
 
 
