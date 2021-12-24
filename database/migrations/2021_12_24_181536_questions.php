@@ -15,7 +15,17 @@ class Questions extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("quiz_id");
+            $table->string("question");
+            $table->longText('image')->nullable();
+            $table->longText("answer1");
+            $table->longText("answer2");
+            $table->longText("answer3");
+            $table->longText("answer4");
+            $table->enum("correct_answer",["answer1","answer2","answer3","answer4"]);
             $table->timestamps();
+            $table->foreign("quiz_id")->references("id")->on("quizzes")->onDelete("cascade"); //quiz_id, quizzes tablosundaki id'ler ile eşleşmeli
+            
         });
     }
 
