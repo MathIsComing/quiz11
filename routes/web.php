@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/panel', function () {
 
 
 Route::group(['middleware'=> ['auth',"isAdmin"]],function () {
-    
+    Route::get('quizzes/{id}', [QuizController::class,"destroy"])->whereNumber("id")->name("quizzes.destroy");
     Route::resource('quizzes', QuizController::class);
 });
 

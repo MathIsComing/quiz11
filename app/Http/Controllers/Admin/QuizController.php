@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use App\Models\Quiz;
+use App\Http\Requests\QuizCreateRequest;
 
 class QuizController extends Controller
 {
@@ -27,7 +28,7 @@ class QuizController extends Controller
      */
     public function create()
     {
-        return "create fonksiyonu";
+        return view("admin.quiz.create");
     }
 
     /**
@@ -36,9 +37,12 @@ class QuizController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuizCreateRequest $request)
     {
-        //
+        //return $request->post();
+        Quiz::create($request->post());
+        return redirect()->route("quizzes.index")->withSuccess("quiz başarı ile oluşturuldu");
+
     }
 
     /**
@@ -60,7 +64,9 @@ class QuizController extends Controller
      */
     public function edit($id)
     {
-        //
+        $quiz=Quiz::find($id) ?? abort(404,"Quiz Bulunamadı");
+        
+        return view("admin.quiz.edit",compact("quiz"));
     }
 
     /**
@@ -72,7 +78,10 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $quiz=Quiz::find($id) ?? abort(404,"Quiz Bulunamadı");
+        Quiz::where("id",$id)->update($request->except(["_method","_token"]));
+
+        return redirect()->route("quizzes.index")->withSuccess("quiz güncelleme başarılı");
     }
 
     /**
@@ -83,6 +92,9 @@ class QuizController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $quiz = Quiz::find($id) ?? abort(404,"quiz bulunamadı");
+        $quiz->delete();
+        return redirect()->route("quizzes.index")->withSucces("Quiz silme işlemi gerçekleşti");
+
     }
 }
