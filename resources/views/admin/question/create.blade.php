@@ -59,7 +59,7 @@
 
                 </div>
                 <br>
-                <button type="submit" class="btn btn-success btn-sm btn-block">Quiz oluştur</button>
+                <button type="submit" class="btn btn-success btn-sm btn-block">Soruyu oluştur</button>
 
             </form>
         </div>

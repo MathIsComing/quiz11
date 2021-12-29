@@ -5,15 +5,19 @@
     <div class="card">
         <div class="card-body">
   
-              <!-- <form method="post" action="">  -->
+               <form method="post" action="{{ route("questions.update",[$question->quiz_id,$question->id]) }}" enctype="multipart/form-data"> 
                 @csrf
+                @method("PUT")
                 <div class="form-group">
                     <label>Soru</label>
                     <input type="text" name="question" class="form-control" value="{{ $question->question }}" required>
-  
-                    <img src="{{ asset($question->image) }}" class="img-responsive" style="width: 200px">
-
+                    
                     <label>Fotoğraf</label>
+                    @if($question->image)
+                    <a href="{{ asset($question->image)}}" target="_blank">
+                    <img src="{{ asset($question->image) }}" class="img-responsive" style="width: 400px"></a>
+                <br/>
+                @endif
                     <input type="file" name="image" class="form-control">
   
   
@@ -61,9 +65,9 @@
   
                 </div>
                 <br>
-                <button type="submit" class="btn btn-success btn-sm btn-block">Quiz oluştur</button>
+                <button type="submit" class="btn btn-success btn-sm btn-block">Soruyu güncellle</button>
   
-            <!--  </form>  -->
+              </form>  
         </div>
     </div>
   
