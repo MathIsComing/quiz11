@@ -42,15 +42,16 @@ class QuestionController extends Controller
     public function store(QuestionCreateRequest $request,$id)
     {   
         if($request->hasFile("image")){
-            $fileName = Str::slug($request->question.".".$request->image->extension());
+            $fileName = Str::slug($request->question).".".$request->image->getClientOriginalextension();
             $fileNameWithUpload = "uploads/".$fileName;
 
-            $request->image->move(public_path(("uploads"),$fileName));
+            $request->image->move(public_path("uploads"),$fileName);
+            
             $request->merge([
 
                 "image"=>$fileNameWithUpload
 
-            ]);
+           ]);  
 
 
         }
@@ -76,9 +77,10 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($quiz_id,$question_id)
     {
-        //
+        $question= Quiz::find($quiz_id)->questions()->whereId($question_id)->first() ??  abort(404,"quiz veya soru bulunamadı");
+        return view("admin.question.edit",compact("question"));
     }
 
     /**
