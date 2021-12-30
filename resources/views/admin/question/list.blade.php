@@ -3,6 +3,9 @@
 
     <div class="card-boddy">
         <h5 class="card-title">
+
+          <a href="{{ route("quizzes.index", $quiz->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-left-arrow"></i>Quizlere dön</a>
+
             <a href="{{ route("questions.create", $quiz->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>Soru oluştur</a>
         </h5>
         <table class="table table-bordered">
@@ -32,7 +35,7 @@
                 <td>
 
                   <a href="{{ route('questions.edit', [$quiz->id,$question->id]) }}" class="btn btn-sm btn-primary">Düzenle</a>
-                    <a href="{{ route('quizzes.destroy', $question->id) }}" class="btn btn-sm btn-danger">Sil</a>
+                    <a href="{{ route('question.destroy', [$quiz->id,$question->id]) }}" class="btn btn-sm btn-danger">Sil</a>
 
                   </td>
               </tr>
