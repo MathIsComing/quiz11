@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
+use Answers;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+Use App\Models\Answer;
 
-use App\Models\Quiz;
-
-class QuizFactory extends Factory
+class AnswerFactory extends Factory
 {
+
+    protected $model = Answer::class;
     /**
      * Define the model's default state.
      *
@@ -16,11 +17,11 @@ class QuizFactory extends Factory
      */
     public function definition()
     {
-        $title=$this->faker->sentence(rand(3,7));
         return [
-            "title"=>$title,
-            "slug"=>Str::slug($title),
-            "description"=>$this->faker->text(200)
+            
+            "user_id"=>rand(1,10),
+            "question_id"=>rand(1,100),
+            "answer"=>"answer".rand(1,4)
 
         ];
     }

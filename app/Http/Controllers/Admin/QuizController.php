@@ -88,8 +88,9 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $quiz=Quiz::find($id) ?? abort(404,"Quiz Bulunamadı");
-        Quiz::where("id",$id)->update($request->except(["_method","_token"]));
+        Quiz::find($id)->first()->update($request->except(["_method","_token"]));
 
         return redirect()->route("quizzes.index")->withSuccess("quiz güncelleme başarılı");
     }
@@ -107,4 +108,6 @@ class QuizController extends Controller
         return redirect()->route("quizzes.index")->withSucces("Quiz silme işlemi gerçekleşti");
 
     }
+    
+
 }
