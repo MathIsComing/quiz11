@@ -2,9 +2,34 @@
     <x-slot name="header">Quziler </x-slot>
 
     <div class="card-boddy">
-        <h5 class="card-title">
+        <h5 class="card-title float-right">
             <a href="{{ route("quizzes.create") }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>Quiz oluştur</a>
         </h5>
+
+        <form method="GET" action="">
+          <div class="form-row">
+          <div class="col-md-4">
+            <input type="text" name="title" value="{{ request()->get("title") }}" class="form-control" placeholder="Quiz Adı">
+          </div>
+          <div class="col-md-4">
+            <select class="form-control" onchange="this.form.submit()" name="status">
+              <option value="">Durum seçiniz</option>
+              <option @if(request()->get("status")==="publish") selected @endif value="publish">aktif</option>
+              <option @if(request()->get("status")==="passive") selected @endif value="passive">pasif</option>
+              <option @if(request()->get("status")==="draft") selected @endif value="draft">Taslak</option>
+            </select>
+          </div>
+          @if (request()->get("title") || request()->get("status") )
+            
+          
+          <div class="col-md-2">
+            <a href=" {{ route("quizzes.index") }}" class="btn btn-secondary">Sıfırla</a>
+
+          </div>
+          @endif
+          </div>
+        </form>
+
         <table class="table table-bordered">
             <thead>
               <tr>
@@ -57,7 +82,7 @@
               @endforeach
             </tbody>
           </table>
-          {{ $quizzes->links() }}
+          {{ $quizzes->withQueryString()->links()}}
     </div>
     <div class="alert alert-danger">Boostrap dash</div>
 </x-app-layout>
