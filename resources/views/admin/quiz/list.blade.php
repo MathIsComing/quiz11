@@ -49,8 +49,16 @@
                 <td>
                   @switch($quiz->status)
                     @case("publish")
-                    
+
+                    @if (!$quiz->finished_at)
                     <span class="badge alert-primary">Aktif</span>
+                    @elseif( $quiz->finished_at>now())
+                    <span class="badge alert-primary">Aktif</span>
+                    @else 
+                    <span class="badge alert-primary">Tarihi dolmuş</span>
+                    @endif
+                    
+                    
                     
                       
                       @break

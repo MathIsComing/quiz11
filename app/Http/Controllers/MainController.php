@@ -13,7 +13,7 @@ class MainController extends Controller
      $quizzes= Quiz::where("status","publish")->where(function($query){
          $query->whereNull("finished_at")->orWhere("finished_at",">",now());
      })->withCount("questions")->paginate(5);
-    $results = auth()->user()->results;
+      $results = auth()->user()->results;
      return view('dashboard', compact("quizzes","results"));
         
     }
