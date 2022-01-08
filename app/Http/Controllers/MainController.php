@@ -10,17 +10,26 @@ use App\Models\Result;
 class MainController extends Controller
 {
     public function dashboard() {
-     $quizzes= Quiz::where("status","publish")->withCount("questions")->paginate(1);
-        return view('dashboard', compact("quizzes"));
+     $quizzes= Quiz::where("status","publish")->where(function($query){
+         $query->whereNull("finished_at")->orWhere("finished_at",">",now());
+     })->withCount("questions")->paginate(5);
+    $results = auth()->user()->results;
+     return view('dashboard', compact("quizzes","results"));
+        
     }
 
     public function quiz_detail($slug){
-        $quiz= Quiz::whereSlug($slug)->withCount("questions")->first() ?? abort(404,"veri bulunamadı"); 
+         $quiz= Quiz::whereSlug($slug)->with("my_result","topTen.user")->withCount("questions")->first() ?? abort(404,"veri bulunamadı"); 
+       
         return view("quiz_detail",compact("quiz"));
     }
 
     public function quiz($slug){
-         $quiz = Quiz::whereSlug($slug)->with("questions")->first();
+        $quiz = Quiz::whereSlug($slug)->with("questions.my_answer","my_result")->first();
+
+        if($quiz->my_result){
+            return view("quiz_result",compact("quiz"));
+        }
 
         return view("quiz", compact("quiz"));
     }
@@ -29,6 +38,10 @@ class MainController extends Controller
 
         $quiz=Quiz::with("questions")->whereSlug($slug)->first() ?? abort(404, "quiz bulunamadı");
         $correct=0;
+        if($quiz->my_result){
+            abort(404,"Bu Quiz'e daha önce katıldınız");
+        }
+
         foreach($quiz->questions as $question){
             
             Answer::create([

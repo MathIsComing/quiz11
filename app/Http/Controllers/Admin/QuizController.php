@@ -63,7 +63,11 @@ class QuizController extends Controller
      */
     public function show($id)
     {
-        //
+        
+            $quiz = Quiz::with("questions.my_answer","my_result")->find($id);
+
+            return view("admin.quiz.show", compact("quiz"));
+        
     }
 
     /**
@@ -88,9 +92,9 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        return $request;
         $quiz=Quiz::find($id) ?? abort(404,"Quiz Bulunamadı");
-        Quiz::find($id)->first()->update($request->except(["_method","_token"]));
+         Quiz::find($request->id)->first()->update($request->except(["_method","_token"]));
 
         return redirect()->route("quizzes.index")->withSuccess("quiz güncelleme başarılı");
     }

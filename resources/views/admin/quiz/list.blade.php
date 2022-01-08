@@ -72,6 +72,11 @@
                 </td>
                 <td>{{ $quiz->finished_at }}</td>
                 <td>
+
+                  <a href="{{ route("quizzes.details", $quiz->id) }}" class="btn btn-sm btn-secondary">
+                    <i class="fa fa-info-circle"></i>
+                  </a>
+
                     <a href="{{ route('questions.index', $quiz->id) }}" class="btn btn-sm btn-primary">Soruları Gör</a>
                     
                     <a href="{{ route('quizzes.edit', $quiz->id) }}" class="btn btn-sm btn-primary">Düzenle</a>

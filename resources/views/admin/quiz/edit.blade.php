@@ -34,6 +34,7 @@
 
                 </div>
                 <br>
+                <input type="hidden" name="id" class="form-control" value="{{ $quiz->id }}" required>
                 <button type="submit" class="btn btn-success btn-sm btn-block">Quiz güncelle</button>
 
             </form>
